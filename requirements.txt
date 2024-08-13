@@ -1,5 +1,5 @@
 streamlit
-python
+
 html
 css
 js
