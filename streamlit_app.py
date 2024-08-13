@@ -1,6 +1,5 @@
 # Import necessary libraries
 import streamlit as st
-import python
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.datasets import load_files
@@ -34,7 +33,7 @@ st.title('Sentiment Analysis App')
 text = st.text_area('Enter text to analyze')
 
 # URL input
-url = st.text_input('Enter a URL')
+url = st.text_input('Enter a URL', value='https://www.example.com')
 
 # Analyze button
 if st.button('Analyze'):
@@ -62,3 +61,20 @@ if st.button('Analyze'):
                 
                 # Extract the text from the HTML content
                 text = soup.get_text()
+                
+                # Transform the text into a vector
+                vector = vectorizer.transform([text])
+                
+                # Predict the sentiment
+                sentiment = classifier.predict(vector)[0]
+                
+                # Display the sentiment
+                st.write(f'Sentiment: {sentiment}')
+            else:
+                st.write('Failed to retrieve URL content')
+        
+        else:
+            st.write('Please enter text or a URL')
+    
+    except Exception as e:
+        st.write(f'Error: {e}')
